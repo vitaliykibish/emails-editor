@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Use Emails editor</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel=" stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+        background-color: #ccc;
+      }
+
+      .container {
+        width: 542px;
+        margin: 15% auto;
+        border-radius: 8px;
+        padding: 22px 50px 24px;
+        overflow: hidden;
+        box-sizing: border-box;
+        background-color: #fff;
+        box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+      }
+
+      .container > * {
+        box-sizing: border-box;
+      }
+
+      .header {
+        width: 542px;
+        margin: -40px 0 0 -50px;
+        padding: 50px 50px 25px 50px;
+        background-color: #f8f8f7;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+
+      .title {
+        margin: 0 0 25px 0;
+        font-size: 20px;
+        font-weight: normal;
+        color: #050038;
+      }
+
+      .board-name {
+        font-weight: bold;
+      }
+
+      .footer {
+        padding-top: 24px;
+      }
+
+      .button {
+        min-width: 100px;
+        padding: 10px 14px;
+        margin-right: 12px;
+        border: 1px solid;
+        border-radius: 4px;
+        border-color: #4262ff;
+        color: #fff;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 300;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+        outline: none;
+        background-color: #4262ff;
+        cursor: pointer;
+        letter-spacing: 0.6px;
+      }
+
+      .button:hover {
+        border-color: #455bed;
+        background-color: #455bed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h3 class="title">
+          Share
+          <span class="board-name">
+            Board name
+          </span>
+          with others
+        </h3>
+        <div id="emails-editor"></div>
+      </header>
+      <footer class="footer">
+        <button class="button" data-action="ADD_RANDOM_EMAIL">
+          Add email
+        </button>
+        <button class="button" data-action="SHOW_COUNT_EMAILS">
+          Get emails count
+        </button>
+      </footer>
+    </div>
+    <script type="text/javascript" src="dist/emails-editor.js"></script>
+    <script type="text/javascript">
+      const reEmail = /^\S{1,}@\S{1,}\.\S{2,3}$/
+      const placeholder = 'add more people...'
+      const container = document.querySelector('#emails-editor')
+
+      const emailsEditor = EmailsEditor({ container, placeholder })
+      const footerElm = document.querySelector('.footer')
+
+      emailsEditor.subscribe(emails => console.log('emails: ', emails))
+
+      footerElm.addEventListener('click', e => {
+        const dataset = e.target.dataset
+
+        switch (dataset.action) {
+          case 'ADD_RANDOM_EMAIL':
+            const email =
+              Math.random()
+                .toString()
+                .slice(-4) + '@miro.com'
+
+            emailsEditor.setEmails(email)
+            break
+          case 'SHOW_COUNT_EMAILS':
+            const emails = emailsEditor.getEmails().filter(email => reEmail.test(email))
+
+            alert(emails.length)
+            break
+        }
+      })
+    </script>
+  </body>
+</html>

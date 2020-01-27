@@ -1,0 +1,27 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": [
+    "import",
+    "eslint:recommended",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "import",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": "error",
+    "import/first": "error",
+    "no-restricted-globals": 0
+  }
+}
